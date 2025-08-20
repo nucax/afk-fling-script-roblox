@@ -38,6 +38,78 @@ toggleButton.TextColor3 = Color3.fromRGB(255,255,255)
 toggleButton.Text = "Start Fling"
 toggleButton.Parent = gui
 
+-- Minimize button
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0, 30, 0, 30)
+minimizeButton.Position = UDim2.new(0, 230, 0, 20)
+minimizeButton.Text = "-"
+minimizeButton.TextScaled = true
+minimizeButton.BackgroundColor3 = Color3.fromRGB(100,100,100)
+minimizeButton.TextColor3 = Color3.fromRGB(255,255,255)
+minimizeButton.Parent = gui
+
+-- Close button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(0, 270, 0, 20)
+closeButton.Text = "X"
+closeButton.TextScaled = true
+closeButton.BackgroundColor3 = Color3.fromRGB(200,0,0)
+closeButton.TextColor3 = Color3.fromRGB(255,255,255)
+closeButton.Parent = gui
+
+-- GitHub button (rainbow)
+local githubButton = Instance.new("TextButton")
+githubButton.Size = UDim2.new(0, 250, 0, 40)
+githubButton.Position = UDim2.new(0, 20, 0, 200)
+githubButton.TextScaled = true
+githubButton.BackgroundColor3 = Color3.fromRGB(30,30,30)
+githubButton.TextColor3 = Color3.fromRGB(255,255,255)
+githubButton.Text = "https://github.com/nucax"
+githubButton.Parent = gui
+
+-- Rainbow effect for GitHub button
+spawn(function()
+    local hue = 0
+    while githubButton.Parent do
+        hue = (hue + 0.01) % 1
+        githubButton.TextColor3 = Color3.fromHSV(hue, 1, 1)
+        task.wait(0.05)
+    end
+end)
+
+-- Copy GitHub link on click
+githubButton.MouseButton1Click:Connect(function()
+    if setclipboard then
+        setclipboard("https://github.com/nucax")
+    end
+end)
+
+-- Close functionality
+closeButton.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
+
+-- Minimize functionality
+local minimized = false
+minimizeButton.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    if minimized then
+        timerLabel.Visible = false
+        counterLabel.Visible = false
+        toggleButton.Visible = false
+        githubButton.Visible = false
+        minimizeButton.Text = "+"
+    else
+        timerLabel.Visible = true
+        counterLabel.Visible = true
+        toggleButton.Visible = true
+        githubButton.Visible = true
+        minimizeButton.Text = "-"
+    end
+end)
+
+-- Variables
 local startTime = 0
 local FlingActive = false
 local flungCount = 0
